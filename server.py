@@ -72,7 +72,7 @@ def groups_format(data):
 		cursor.execute("SELECT * FROM Emails WHERE id=%s", email_id)
 		email = cursor.fetchone()[1]
 		group_type_id = group[6]
-		cursor.execute("SELECT * FROM Group_Types WHERE id=%s;", group_type)
+		cursor.execute("SELECT * FROM Group_Types WHERE id=%s;", group_type_id)
 		data = cursor.fetchone()
 		description = group[7]
 		group_type_name = cursor.fetchone()[1]
