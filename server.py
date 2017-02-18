@@ -77,7 +77,7 @@ def groups_format(data):
 		description = group[7]
 		group_type_name = data[1]
 		
-		groupDict = {"id_group": id_group, "user_id": user_id, "image_url": file_id,
+		groupDict = {"group_id": id_group, "user_id": user_id, "image_url": file_id,
 					 "group_name": group_name, "phone": phone, "email": email,
 					 "group_type_name": group_type_name, "description": description}
 		groupDicts.append(groupDict)
