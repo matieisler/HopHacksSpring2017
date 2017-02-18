@@ -18,6 +18,8 @@ class ArticleViewController: UIViewController {
         (self.view.viewWithTag(2) as! UILabel).text = article.title
         (self.view.viewWithTag(3) as! UIButton).setTitle(article.publisherName, for: .normal)
         (self.view.viewWithTag(5) as! UITextView).text = article.content
+        
+        self.navigationController?.navigationBar.topItem?.title = "Articles"
     }
     
 }

@@ -18,7 +18,7 @@ class MiscViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
-        self.navigationController?.navigationBar.topItem?.title = "Events"
+        self.navigationController?.navigationBar.topItem?.title = "Miscellaneous"
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

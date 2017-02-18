@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wq0-nW-25V">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wq0-nW-25V">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -32,7 +32,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tkx-7x-xTd" id="GES-yh-cMA">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLD-EH-GkX">
@@ -93,7 +93,7 @@
                             <constraint firstItem="wlk-XV-vBq" firstAttribute="top" secondItem="QEt-at-n8t" secondAttribute="bottom" id="nxE-9Z-b3k"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Groups" id="tiR-8f-Qef"/>
+                    <tabBarItem key="tabBarItem" title="Groups" image="groupsIcon" id="tiR-8f-Qef"/>
                     <connections>
                         <outlet property="tableView" destination="QEt-at-n8t" id="sge-T0-dVN"/>
                         <segue destination="OUZ-ql-6Lz" kind="show" identifier="goToOrganizationSegue" id="2T0-oO-MLa"/>
@@ -254,7 +254,7 @@
                             <constraint firstItem="j0B-Uk-6w5" firstAttribute="top" secondItem="dwx-5K-bQq" secondAttribute="bottom" id="zQU-nq-jxd"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Events" id="DzU-1e-Wwl"/>
+                    <tabBarItem key="tabBarItem" title="Events" image="EventsIcon" id="DzU-1e-Wwl"/>
                     <connections>
                         <outlet property="tableView" destination="j0B-Uk-6w5" id="a1A-Go-Onm"/>
                         <segue destination="OUZ-ql-6Lz" kind="show" identifier="goToOrganizationSegue" id="2mW-G6-3nv"/>
@@ -487,7 +487,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mJR-Sv-9O5">
-                                <rect key="frame" x="0.0" y="-33.5" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="-34" width="375" height="668"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -536,7 +536,7 @@
                             <constraint firstItem="SGx-sf-nAn" firstAttribute="width" secondItem="wmK-2q-SxD" secondAttribute="width" multiplier="0.8" id="wP6-8p-NEK"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" id="Qvx-0h-esi"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profileIcon" id="Qvx-0h-esi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Zk-r9-pjx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -803,7 +803,7 @@
                             <constraint firstItem="kDg-vC-EEe" firstAttribute="top" secondItem="bDk-cq-csu" secondAttribute="bottom" id="L7e-v1-Bqw"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Misc" id="uFB-qH-b5W"/>
+                    <tabBarItem key="tabBarItem" title="Misc" image="miscIcon" id="uFB-qH-b5W"/>
                     <connections>
                         <outlet property="tableView" destination="kDg-vC-EEe" id="lcJ-ml-CGY"/>
                         <segue destination="OUZ-ql-6Lz" kind="show" identifier="goToOrganizationSegue" id="Eee-e8-wZN"/>
@@ -816,8 +816,12 @@
     </scenes>
     <resources>
         <image name="Badge" width="215" height="230"/>
+        <image name="EventsIcon" width="27" height="27"/>
+        <image name="groupsIcon" width="36" height="36"/>
+        <image name="miscIcon" width="25" height="25"/>
+        <image name="profileIcon" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rgz-h4-Auc"/>
+        <segue reference="2T0-oO-MLa"/>
     </inferredMetricsTieBreakers>
 </document>
