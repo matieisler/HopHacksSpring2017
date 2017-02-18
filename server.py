@@ -82,7 +82,7 @@ def groups_format(data):
 					 "group_type_name": group_type_name, "description": description}
 		groupDicts.append(groupDict)
 	returnDict = {"status": "ok", "data": groupDicts}
-	return jsonify(returnDict)
+	return returnDict
 
 
 @app.route('/getUsers', methods=['POST'])
