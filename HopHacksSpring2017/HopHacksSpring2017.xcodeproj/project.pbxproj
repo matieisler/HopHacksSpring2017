@@ -13,6 +13,12 @@
 		CAF9D6D11E57E605008C104C /* HopHacksSpring2017.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6CF1E57E605008C104C /* HopHacksSpring2017.xcdatamodeld */; };
 		CAF9D6D31E57E605008C104C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAF9D6D21E57E605008C104C /* Assets.xcassets */; };
 		CAF9D6D61E57E605008C104C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF9D6D41E57E605008C104C /* LaunchScreen.storyboard */; };
+		CAF9D6DE1E58034D008C104C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6DD1E58034D008C104C /* TabBarController.swift */; };
+		CAF9D6E01E5806E9008C104C /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6DF1E5806E9008C104C /* GroupsViewController.swift */; };
+		CAF9D6E21E580776008C104C /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6E11E580776008C104C /* MainFeedViewController.swift */; };
+		CAF9D6E41E58079F008C104C /* MiscViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6E31E58079F008C104C /* MiscViewController.swift */; };
+		CAF9D6E61E5807B6008C104C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6E51E5807B6008C104C /* ProfileViewController.swift */; };
+		CAF9D6E81E5807D8008C104C /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6E71E5807D8008C104C /* EventsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,12 @@
 		CAF9D6D21E57E605008C104C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAF9D6D51E57E605008C104C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CAF9D6D71E57E605008C104C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAF9D6DD1E58034D008C104C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		CAF9D6DF1E5806E9008C104C /* GroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
+		CAF9D6E11E580776008C104C /* MainFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
+		CAF9D6E31E58079F008C104C /* MiscViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscViewController.swift; sourceTree = "<group>"; };
+		CAF9D6E51E5807B6008C104C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		CAF9D6E71E5807D8008C104C /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +71,12 @@
 				CAF9D6C81E57E605008C104C /* AppDelegate.swift */,
 				CAF9D6CA1E57E605008C104C /* ViewController.swift */,
 				CAF9D6CC1E57E605008C104C /* Main.storyboard */,
+				CAF9D6E71E5807D8008C104C /* EventsViewController.swift */,
+				CAF9D6DF1E5806E9008C104C /* GroupsViewController.swift */,
+				CAF9D6E11E580776008C104C /* MainFeedViewController.swift */,
+				CAF9D6E51E5807B6008C104C /* ProfileViewController.swift */,
+				CAF9D6E31E58079F008C104C /* MiscViewController.swift */,
+				CAF9D6DD1E58034D008C104C /* TabBarController.swift */,
 				CAF9D6D21E57E605008C104C /* Assets.xcassets */,
 				CAF9D6D41E57E605008C104C /* LaunchScreen.storyboard */,
 				CAF9D6D71E57E605008C104C /* Info.plist */,
@@ -141,8 +159,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAF9D6CB1E57E605008C104C /* ViewController.swift in Sources */,
+				CAF9D6E21E580776008C104C /* MainFeedViewController.swift in Sources */,
+				CAF9D6E41E58079F008C104C /* MiscViewController.swift in Sources */,
+				CAF9D6DE1E58034D008C104C /* TabBarController.swift in Sources */,
 				CAF9D6C91E57E605008C104C /* AppDelegate.swift in Sources */,
 				CAF9D6D11E57E605008C104C /* HopHacksSpring2017.xcdatamodeld in Sources */,
+				CAF9D6E61E5807B6008C104C /* ProfileViewController.swift in Sources */,
+				CAF9D6E01E5806E9008C104C /* GroupsViewController.swift in Sources */,
+				CAF9D6E81E5807D8008C104C /* EventsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
