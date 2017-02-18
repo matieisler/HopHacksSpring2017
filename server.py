@@ -2,23 +2,21 @@
 from flask import Flask, request, jsonify
 from flaskext.mysql import MySQL
 
-from article import Article
-
 import os
 app = Flask(__name__)
 mysql = MySQL()
 
 file = open('notpasswords.txt', 'r')
-user = file.readline()
-password = file.readline()
-database = file.readline()
-host = file.readline()
+user = file.readline().strip()
+password = file.readline().strip()
+database = file.readline().strip()
+host = file.readline().strip()
 
 file.close()
-app.config['MYSQL_DATABASE_USER'] = user.strip()
-app.config['MYSQL_DATABASE_PASSWORD'] = password.strip()
-app.config['MYSQL_DATABASE_DB'] = database.strip()
-app.config['MYSQL_DATABASE_HOST'] = host.strip()
+app.config['MYSQL_DATABASE_USER'] = user
+app.config['MYSQL_DATABASE_PASSWORD'] = password
+app.config['MYSQL_DATABASE_DB'] = database
+app.config['MYSQL_DATABASE_HOST'] = host
 
 mysql.init_app(app)
 conn = mysql.connect()
@@ -28,20 +26,27 @@ cursor = conn.cursor()
 def index():
     if request.method == 'POST':
         json = request.get_json()
-        cursor.execute("SELECT title, info_file, publisher_id from Article WHERE id='1';", (id,))
-        data = cursor.fetchone()
-
+        cursor.execute("SELECT * FROM Article;")
+        data = cursor.fetchall()
         if data is None:
-            data = {"exists": "false"}
+            returnDict = {"status": "ok"}
         else:
-            data = {"exists": "true"}
-        #article = Article(data[0], data[1], data[2])
-        print(article.title)        
-        returnDict = {"status": "ok", "data": "Server is working"}
+            articleDicts = []
+            for article in data:
+                id_article = article[0]
+                file_id = article[1]
+                title = article[2]
+                publisher_id = article[3]
+                info_file = article[4]
+                article_type = article[5]
+                articleDict = {"id": id_article, "file_id": file_id, "title": title, "user_id": publisher_id,
+                               "info_file": info_file, "article_type": article_type}
+                articleDicts.append(articleDict)
+            returnDict = {"status": "ok", "data": articleDicts}
         return jsonify(returnDict)
 
-app.run(debug = True)
+# app.run(debug = True)
 
-#port = int(os.environ.get('PORT', 5000))
-#app.run(debug=True, host="0.0.0.0", port=port)
+port = int(os.environ.get('PORT', 5000))
+app.run(debug=True, host="0.0.0.0", port=port)
 
