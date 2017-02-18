@@ -145,7 +145,7 @@ class Requests:NSObject,NSURLConnectionDelegate{
                 print("EXCEPTION")
             }
             
-            NotificationCenter.default.post(name: "getMainFeedFinished", object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "getMainFeedFinished"), object: nil)
         }
     }
     

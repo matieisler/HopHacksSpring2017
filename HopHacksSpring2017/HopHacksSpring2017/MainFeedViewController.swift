@@ -11,6 +11,7 @@ import UIKit
 class MainFeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var barItem: UITabBarItem!
     
     var articles = [Article]()
     
@@ -49,6 +50,22 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
     func reloadData() {
         articles = DatabaseManager.getFromDatabase(entityName: "Article") as! [Article]
         tableView.reloadData()
+    }
+    
+    func loadImage() {
+        var image = UIImage(named: "Badge")
+        let widthHeightRatio = (image?.size.width)! / (image?.size.height)!
+        let height = self.tabBarController!.tabBar.frame.height * 1.3
+        let width = height * widthHeightRatio
+        UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+        image!.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        let screenHeight = UIScreen.main.bounds.height
+        //barItem.imageInsets = UIEdgeInsetsMake(screenHeight/100, -6, -screenHeight/100, 6)
+        barItem.image = image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        barItem.selectedImage = image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        barItem.title = ""
     }
 
     

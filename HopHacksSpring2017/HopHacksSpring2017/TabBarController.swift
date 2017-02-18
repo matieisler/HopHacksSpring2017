@@ -12,6 +12,13 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        (self.childViewControllers[2] as! MainFeedViewController).loadImage()
+        
+        self.tabBar.shadowImage = UIImage()
+        self.tabBar.backgroundImage = UIImage()
     }
+    
+    
     
 }

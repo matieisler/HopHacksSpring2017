@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wq0-nW-25V">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wq0-nW-25V">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -285,7 +285,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="vJ1-jc-hTZ">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="vyq-mZ-t0Q" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="vyq-mZ-t0Q" customClass="TabBarController" customModule="HopHacksSpring2017" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="xNt-KD-sln"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Res-AN-pL4">
@@ -461,10 +461,11 @@
                             <constraint firstItem="AKW-GC-0U3" firstAttribute="top" secondItem="197-N0-IM3" secondAttribute="bottom" id="Xlu-T7-CT4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="WorksSmall" id="iYt-YT-mtO">
+                    <tabBarItem key="tabBarItem" title="" image="Badge" selectedImage="Badge" id="iYt-YT-mtO">
                         <inset key="imageInsets" minX="0.0" minY="-5" maxX="0.0" maxY="5"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="barItem" destination="iYt-YT-mtO" id="MlQ-oS-Jko"/>
                         <outlet property="tableView" destination="197-N0-IM3" id="cFU-Ys-XSk"/>
                         <segue destination="Lq3-Ud-Ybh" kind="show" identifier="goToShowArticleSegue" id="E4M-bM-Dzz"/>
                     </connections>
@@ -814,7 +815,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="WorksSmall" width="58" height="62"/>
+        <image name="Badge" width="215" height="230"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Eee-e8-wZN"/>
