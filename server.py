@@ -105,7 +105,7 @@ def parse_users():
 				
 				userDict = {"id_user": id_user, "info": info, "name": name,
 							 "last_name": last_name, "gender": gender, "email_id": email_id,
-							 "phone_id": phone_id, "user_type": user_type, "file_id": file_id}
+							 "phone_id": phone_id, "user_type": user_type, "image_url": file_id}
 				userDicts.append(userDict)
 			returnDict = {"status": "ok", "data": userDicts}
 		return jsonify(returnDict)
