@@ -194,4 +194,30 @@ class Requests:NSObject,NSURLConnectionDelegate{
             ]
         NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: self, userInfo: errorDict)
     }
+
+    func getGroups(_ responseDict: NSDictionary) {
+        if let data = responseDict["data"] as? NSArray {
+            let globalVars = GlobalVariables.sharedInstance()
+            globalVars.receivedGroups = [Group]()
+            for group in data {
+                let groupDict = group as! NSDictionary
+                if DatabaseManager.getItem(entityName: "Group", predicateString: "id=\(groupDict["group_id"] as! Int16)") == nil {
+                    let group = DatabaseManager.insertObject(entityName: "Group") as! Group
+                    group.id = groupDict["group_id"] as! Int16
+                    group.user_id = groupDict["user_id"] as! String
+                    group.name = groupDict["group_name"] as! String
+                    group.phone = groupDict["phone"] as! String
+                    group.title = groupDict["title"] as! String
+                    group.email = groupDict["email"] as! String
+                    group.typeName = groupDict["group_type_name"] as! String
+                    group.imageURL = groupDict["image_url"] as! String
+                    globalVars.receivedGroups?.append(event)
+                } else {
+                    globalVars.receivedGroups?.append(DatabaseManager.getItem(entityName: "Group", predicateString: "id=\(groupDict["group_id"] as! Int16)") as! Group)
+                }
+            }
+            try! managedObjectContext.save()
+        }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "getGroupsFinished"), object: nil)
+    }
 }

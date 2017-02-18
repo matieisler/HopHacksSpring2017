@@ -76,7 +76,7 @@ def groups_format(data):
 		data = cursor.fetchone()
 		group_type_name = cursor.fetchone()[1]
 		
-		groupDict = {"id_group": id_group, "user_id": user_id, "file_id": file_id,
+		groupDict = {"id_group": id_group, "user_id": user_id, "image_url": file_id,
 					 "group_name": group_name, "phone": phone, "email": email,
 					 "group_type_name": group_type_name}
 		groupDicts.append(groupDict)
