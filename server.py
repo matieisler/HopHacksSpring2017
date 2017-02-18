@@ -86,8 +86,8 @@ def parse_groups():
                 groupDict = {"id_group": id_group, "user_id": user_id, "file_id": file_id,
                              "group_name": group_name, "phone": phone, "email", email,
                              "group_type_name": group_type_name}
-                groupDicts.append(articleDict)
-            returnDict = {"status": "ok", "data": articleDicts}
+                groupDicts.append(groupDict)
+            returnDict = {"status": "ok", "data": groupDicts}
         return jsonify(returnDict)
     pass
 
