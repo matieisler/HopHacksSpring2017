@@ -139,6 +139,7 @@ class Requests:NSObject,NSURLConnectionDelegate{
                 let id = articleDict["id"] as! Int
                 let title = articleDict["title"] as! String
                 let publisherName = articleDict["publisher_name"] as! String
+                let imageURL = articleDict["image_url"] as! String
                 if DatabaseManager.getItem(entityName: "Article", predicateString: "id=\(id)") == nil {
                     let article = DatabaseManager.insertObject(entityName: "Article") as! Article
                     article.id = Int16(id)
@@ -146,6 +147,8 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     article.title = title
                     article.publisherName = publisherName
                     article.modelDeleted = false
+                    article.imageURL = imageURL
+                    article.datePublished = Tools.dateTimeToNSDate(dateTime: articleDict["date_published"] as! String) as NSDate?
                 }
             }
             
@@ -171,7 +174,7 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     event.title = eventDict["title"] as! String
                     event.modelDeleted = false
                     event.info = eventDict["info_file"] as! String
-                    event.file_url = eventDict["file_url"] as! String
+                    event.imageURL = eventDict["image_url"] as! String
                     globalVars.receivedEvents?.append(event)
                 } else {
                     globalVars.receivedEvents?.append(DatabaseManager.getItem(entityName: "Event", predicateString: "id=\(eventDict["id"] as! Int16)") as! Event)

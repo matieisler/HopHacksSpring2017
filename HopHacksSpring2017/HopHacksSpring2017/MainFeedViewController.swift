@@ -43,6 +43,15 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainFeedCell")!
         (cell.viewWithTag(2) as! UILabel).text = articles[indexPath.row].title
         (cell.viewWithTag(3) as! UILabel).text = articles[indexPath.row].content
+        
+        
+        DispatchQueue.main.async {
+            let data = NSData(contentsOf: NSURL(string: self.articles[indexPath.row].imageURL!)! as URL)
+            let image = UIImage(data: data! as Data)!
+            (cell.viewWithTag(1) as! UIImageView).image = image
+        }
+
+        
         return cell
     }
     
@@ -74,7 +83,10 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        (segue.destination as! ArticleViewController).article = articles[articleToSend]
+        let destination = segue.destination as! ArticleViewController
+        destination.article = articles[articleToSend]
+        destination.mode = 0
+        destination.image = (tableView.cellForRow(at: IndexPath(row: articleToSend, section: 0))?.viewWithTag(1) as! UIImageView).image
     }
 
     

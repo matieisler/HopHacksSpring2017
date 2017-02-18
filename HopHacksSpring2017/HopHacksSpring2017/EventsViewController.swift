@@ -13,6 +13,7 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet var tableView: UITableView!
     
     var events = [Event]()
+    var selectedIndex = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,12 +52,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print(events[indexPath.row].info!)
         
         DispatchQueue.main.async {
-            let data = NSData(contentsOf: NSURL(string: self.events[indexPath.row].file_url!)! as URL)
+            let data = NSData(contentsOf: NSURL(string: self.events[indexPath.row].imageURL!)! as URL)
             let image = UIImage(data: data! as Data)!
-            
-            //DispatchQueue.main.async {
-            //}
-            
             (cell.viewWithTag(1) as! UIImageView).image = image
         }
         
@@ -66,7 +63,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: false)
-        self.performSegue(withIdentifier: "goToOrganizationSegue", sender: self)
+        selectedIndex = indexPath.row
+        self.performSegue(withIdentifier: "goToShowArticleSegue", sender: self)
     }
     
     func reloadData() {
@@ -74,6 +72,12 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             events = GlobalVariables.sharedInstance().receivedEvents!
             tableView.reloadData()
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination as! ArticleViewController
+        destination.event = events[selectedIndex]
+        destination.mode = 1
     }
 
     
