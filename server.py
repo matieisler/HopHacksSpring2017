@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flaskext.mysql import MySQL
 
 import os
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 mysql = MySQL()
 
 file = open('notpasswords.txt', 'r')
@@ -134,22 +134,27 @@ def parse_events():
         dicts = []
         for event in data:
             id_event = event[0]
-            start_date = event[1]
-            end_date = event[2]
+            start_date = str(event[1])
+            end_date = str(event[2])
             title = event[3]
             info_file = event[4]
             location = event[5]
+            file_url = event[7]
             
             cursor.execute("SELECT * FROM Groups WHERE id=%s;", event[6])
             group_id = cursor.fetchone()[3]
             
             eventDict = {"id": id_event, "start_date": start_date, "end_date": end_date, "title": title,
-                           "info_file": info_file, "location": location, "host_name": group_id}
+                           "info_file": info_file, "location": location, "host_name": group_id, "file_url": file_url}
             dicts.append(eventDict)
         returnDict = {"status": "ok", "data": dicts}
     return jsonify(returnDict)
-# app.run(debug = True)
 
+
+
+
+
+#app.run(debug = True)
 port = int(os.environ.get('PORT', 5000))
 app.run(debug=True, host="0.0.0.0", port=port)
 

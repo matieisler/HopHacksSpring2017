@@ -22,6 +22,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.navigationController?.navigationBar.topItem?.title = "Events"
         
+        self.tableView.separatorStyle = .none
+        
         NotificationCenter.default.addObserver(self, selector: #selector(EventsViewController.reloadData), name: NSNotification.Name(rawValue: "getEventsFinished"), object: nil)
         
         let dict: NSDictionary = ["start_date": "2017-02-16", "end_date": "2017-02-20"]
@@ -37,7 +39,29 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "eventCell")!
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell")!
+        (cell.viewWithTag(2) as! UILabel).text = events[indexPath.row].title!
+        (cell.viewWithTag(3) as! UILabel).text = events[indexPath.row].info!
+        let date = events[indexPath.row].startDate
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        (cell.viewWithTag(4) as! UILabel).text = "\(formatter.string(from: date as! Date))  @ \(events[indexPath.row].location!)"
+        print(events[indexPath.row].info!)
+        
+        DispatchQueue.main.async {
+            let data = NSData(contentsOf: NSURL(string: self.events[indexPath.row].file_url!)! as URL)
+            let image = UIImage(data: data! as Data)!
+            
+            //DispatchQueue.main.async {
+            //}
+            
+            (cell.viewWithTag(1) as! UIImageView).image = image
+        }
+        
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

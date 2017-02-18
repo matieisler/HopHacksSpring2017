@@ -166,9 +166,12 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     event.id = eventDict["id"] as! Int16
                     event.host = eventDict["host_name"] as! String
                     event.location = eventDict["location"] as! String
-                    event.startDate = eventDict["start_date"] as! String
+                    //event.startDate = eventDict["start_date"] as! String
+                    event.startDate = Tools.dateTimeToNSDate(dateTime: eventDict["start_date"] as! String) as NSDate?
                     event.title = eventDict["title"] as! String
                     event.modelDeleted = false
+                    event.info = eventDict["info_file"] as! String
+                    event.file_url = eventDict["file_url"] as! String
                     globalVars.receivedEvents?.append(event)
                 } else {
                     globalVars.receivedEvents?.append(DatabaseManager.getItem(entityName: "Event", predicateString: "id=\(eventDict["id"] as! Int16)") as! Event)
