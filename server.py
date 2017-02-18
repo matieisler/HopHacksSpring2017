@@ -43,10 +43,10 @@ def index():
                 
                 publisher_name = data[3]
                 
-                info_file = article[4]
+                content = article[4]
                 article_type = article[5]
                 articleDict = {"id": id_article, "file_id": file_id, "title": title, "publisher_name": publisher_name,
-                               "info_file": info_file, "article_type": article_type}
+                               "content": content, "article_type": article_type}
                 articleDicts.append(articleDict)
             returnDict = {"status": "ok", "data": articleDicts}
         return jsonify(returnDict)
