@@ -99,6 +99,36 @@ def groups_format(data):
     returnDict = {"status": "ok", "data": groupDicts}
 
 
+@app.route('/getUsers', methods=['POST'])
+def parse_users():
+    if request.method == 'POST':
+        json = request.get_json()
+        cursor.execute("SELECT * FROM Users;")
+        data = cursor.fetchall()
+        if data is None:
+            returnDict = {"status": "ok"}
+        else:
+            usersDict = []
+            for user in data:
+                id_user = user[0]
+                info = user[1]
+                name = user[2]
+                last_name = user[3]
+                gender = user[4]
+                email_id = user[5]
+                phone_id = user[6]
+                user_type = user[7]
+                file_id = user[8]
+                
+                userDict = {"id_user": id_user, "info": info, "name": name,
+                             "last_name": last_name, "gender": gender, "email_id": email_id,
+                             "phone_id": phone_id, "user_type": user_type, "file_id": file_id}
+                userDicts.append(userDict)
+            returnDict = {"status": "ok", "data": userDicts}
+        return jsonify(returnDict)
+    pass
+
+
 @app.route('/getGroups', methods=['POST'])
 def parse_groups():
     if request.method == 'POST':
@@ -112,25 +142,35 @@ def parse_groups():
         return jsonify(returnDict)
     pass
 
+@app.route('/getEvents', methods=['POST'])
 def parse_events():
-    data = cursor.fetchall()
+    if request.method == 'POST':
+        json = request.get_json()
+        startDate = json["start_date"]
+        endDate = json["end_date"]
+        if startDate is None and endDate is None:
+            cursor.execute("SELECT * FROM Events;")
+        else:
+            cursor.execute("SELECT * FROM Events WHERE start_date >= %s AND end_date <= %s;", (startDate, endDate))
+        data = cursor.fetchall()
     if data is None:
         returnDict = {"status": "ok"}
     else:
         dicts = []
         for event in data:
             id_event = event[0]
-            start_date = event[1]
-            end_date = event[2]
+            start_date = str(event[1])
+            end_date = str(event[2])
             title = event[3]
             info_file = event[4]
             location = event[5]
+            file_url = event[7]
             
-            cursor.execute("SELECT * FROM Groups WHERE id=%s;", group_id)
+            cursor.execute("SELECT * FROM Groups WHERE id=%s;", event[6])
             group_id = cursor.fetchone()[3]
             
             eventDict = {"id": id_event, "start_date": start_date, "end_date": end_date, "title": title,
-                           "info_file": info_file, "location": location, "group_id": group_id}
+                           "info_file": info_file, "location": location, "host_name": group_id, "file_url": file_url}
             dicts.append(eventDict)
         returnDict = {"status": "ok", "data": dicts}
     return jsonify(returnDict)
@@ -155,7 +195,6 @@ def filterByType():
             		returnDict = article_format(data)
                 returnDicts.append(returnDict)
         return returnDicts
-
 
 # app.run(debug = True)
 
