@@ -17,6 +17,7 @@ class GlobalVariables {
     let server = "http://127.0.0.1:5000"
     
     let rowHeight = CGFloat(200.0)
+    var receivedEvents: [Event]?
     
     class func sharedInstance() -> GlobalVariables {
         return _globalVariablesInstance;

@@ -12,6 +12,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet var tableView: UITableView!
     
+    var events = [Event]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,10 +21,15 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.dataSource = self
         
         self.navigationController?.navigationBar.topItem?.title = "Events"
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(EventsViewController.reloadData), name: NSNotification.Name(rawValue: "getEventsFinished"), object: nil)
+        
+        let dict: NSDictionary = ["start_date": "2017-02-16", "end_date": "2017-02-20"]
+        Requests.sharedInstance.sendRequest(dict, action: "getEvents")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return events.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -36,6 +43,13 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: false)
         self.performSegue(withIdentifier: "goToOrganizationSegue", sender: self)
+    }
+    
+    func reloadData() {
+        if let _ = GlobalVariables.sharedInstance().receivedEvents {
+            events = GlobalVariables.sharedInstance().receivedEvents!
+            tableView.reloadData()
+        }
     }
 
     

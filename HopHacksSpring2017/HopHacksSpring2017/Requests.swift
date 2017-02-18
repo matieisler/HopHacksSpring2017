@@ -23,6 +23,7 @@ class Requests:NSObject,NSURLConnectionDelegate{
     var currentConnectionString:String?;
     
     var getMainFeed: NSURLConnection?
+    var getEvents: NSURLConnection?
     
     
     let server = GlobalVariables.sharedInstance().server
@@ -49,6 +50,8 @@ class Requests:NSObject,NSURLConnectionDelegate{
         switch (action) {
         case "getMainFeed":
             getMainFeed = NSURLConnection(request: request as URLRequest, delegate: self)
+        case "getEvents":
+            getEvents = NSURLConnection(request: request as URLRequest, delegate: self)
         default:
             break;
         }
@@ -81,12 +84,16 @@ class Requests:NSObject,NSURLConnectionDelegate{
             if (status == "ok") {
                 if connection == getMainFeed {
                     getMainFeed(responseDict)
+                } else if connection == getEvents {
+                    getEvents(responseDict)
                 }
             }
                 
             else if (status == "error") {
                 if connection == getMainFeed {
                     sendErrorNotification(responseDict, name: "getMainFeedFailed")
+                } else if connection == getEvents {
+                    sendErrorNotification(responseDict, name: "getEvents")
                 }
                 
             }
@@ -107,6 +114,8 @@ class Requests:NSObject,NSURLConnectionDelegate{
             ]
         if connection == getMainFeed {
             sendErrorNotification(errorDict as NSDictionary, name: "getMainFeedFailed");
+        } else if connection == getEvents {
+            sendErrorNotification(errorDict as NSDictionary, name: "getEvents")
         }
         
     }
@@ -145,6 +154,31 @@ class Requests:NSObject,NSURLConnectionDelegate{
             try! managedObjectContext.save()
         }
     }
+    
+    func getEvents(_ responseDict: NSDictionary) {
+        if let data = responseDict["data"] as? NSArray {
+            let globalVars = GlobalVariables.sharedInstance()
+            globalVars.receivedEvents = [Event]()
+            for ev in data {
+                let eventDict = ev as! NSDictionary
+                if DatabaseManager.getItem(entityName: "Event", predicateString: "id=\(eventDict["id"] as! Int16)") == nil {
+                    let event = DatabaseManager.insertObject(entityName: "Event") as! Event
+                    event.id = eventDict["id"] as! Int16
+                    event.host = eventDict["host_name"] as! String
+                    event.location = eventDict["location"] as! String
+                    event.startDate = eventDict["start_date"] as! String
+                    event.title = eventDict["title"] as! String
+                    event.modelDeleted = false
+                    globalVars.receivedEvents?.append(event)
+                } else {
+                    globalVars.receivedEvents?.append(DatabaseManager.getItem(entityName: "Event", predicateString: "id=\(eventDict["id"] as! Int16)") as! Event)
+                }
+            }
+            try! managedObjectContext.save()
+        }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "getEventsFinished"), object: nil)
+    }
+    
     
     
     func sendErrorNotification(_ responseDict:NSDictionary, name:String){

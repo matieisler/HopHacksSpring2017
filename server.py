@@ -140,11 +140,11 @@ def parse_events():
             info_file = event[4]
             location = event[5]
             
-            cursor.execute("SELECT * FROM Groups WHERE id=%s;", group_id)
+            cursor.execute("SELECT * FROM Groups WHERE id=%s;", event[6])
             group_id = cursor.fetchone()[3]
             
             eventDict = {"id": id_event, "start_date": start_date, "end_date": end_date, "title": title,
-                           "info_file": info_file, "location": location, "group_id": group_id}
+                           "info_file": info_file, "location": location, "host_name": group_id}
             dicts.append(eventDict)
         returnDict = {"status": "ok", "data": dicts}
     return jsonify(returnDict)
