@@ -50,8 +50,9 @@ def articles_format(data):
 		
 		content = article[4]
 		article_type = article[5]
+		date_published = article[6]
 		articleDict = {"id": id_article, "image_url": file_id, "title": title, "publisher_name": publisher_name,
-					   "content": content, "article_type": article_type}
+					   "content": content, "article_type": article_type, "date_published": date_published}
 		articleDicts.append(articleDict)
 	returnDict = {"status": "ok", "data": articleDicts}
 	return returnDict
