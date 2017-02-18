@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wq0-nW-25V">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wq0-nW-25V">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -7,11 +7,12 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Groups-->
         <scene sceneID="pBh-fo-0e4">
             <objects>
                 <viewController id="5Wb-mS-o1B" sceneMemberID="viewController">
@@ -31,7 +32,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tkx-7x-xTd" id="GES-yh-cMA">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLD-EH-GkX">
@@ -92,11 +93,45 @@
                             <constraint firstItem="wlk-XV-vBq" firstAttribute="top" secondItem="QEt-at-n8t" secondAttribute="bottom" id="nxE-9Z-b3k"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="tiR-8f-Qef"/>
+                    <tabBarItem key="tabBarItem" title="Groups" id="tiR-8f-Qef"/>
+                    <connections>
+                        <segue destination="OUZ-ql-6Lz" kind="show" identifier="goToShowArticleSegue" id="2T0-oO-MLa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTX-Qv-Azt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1774" y="-1899"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="lN9-KC-yJP">
+            <objects>
+                <viewController id="OUZ-ql-6Lz" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ls6-j7-41q"/>
+                        <viewControllerLayoutGuide type="bottom" id="rBm-zw-ubF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xsY-ox-FMo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Agm-gi-IRc">
+                                <rect key="frame" x="6" y="84" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Agm-gi-IRc" secondAttribute="height" multiplier="1:1" id="raE-FR-ex8"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Agm-gi-IRc" firstAttribute="top" secondItem="ls6-j7-41q" secondAttribute="bottom" constant="20" id="AUp-sK-ZJ6"/>
+                            <constraint firstItem="Agm-gi-IRc" firstAttribute="width" secondItem="xsY-ox-FMo" secondAttribute="width" multiplier="0.4" id="PrV-mT-gC7"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="Agm-gi-IRc" secondAttribute="leading" constant="10" id="uK1-Bh-KLh"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t7b-c6-uLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2577" y="-1899"/>
         </scene>
         <!--Item-->
         <scene sceneID="m1E-SJ-4ll">
