@@ -92,7 +92,27 @@ def parse_groups():
     pass
 
 def parse_events():
-    pass
+    data = cursor.fetchall()
+    if data is None:
+        returnDict = {"status": "ok"}
+    else:
+        dicts = []
+        for event in data:
+            id_event = event[0]
+            start_date = event[1]
+            end_date = event[2]
+            title = event[3]
+            info_file = event[4]
+            location = event[5]
+            
+            cursor.execute("SELECT * FROM Groups WHERE id=%s;", group_id)
+            group_id = cursor.fetchone()[3]
+            
+            eventDict = {"id": id_event, "start_date": start_date, "end_date": end_date, "title": title,
+                           "info_file": info_file, "location": location, "group_id": group_id}
+            dicts.append(eventDict)
+        returnDict = {"status": "ok", "data": dicts}
+    return jsonify(returnDict)
 # app.run(debug = True)
 
 port = int(os.environ.get('PORT', 5000))
