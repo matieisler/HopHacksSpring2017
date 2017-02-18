@@ -1,5 +1,5 @@
 //
-//  Request.swift
+//  Requests.swift
 //  HopHacksSpring2017
 //
 //  Created by Matias Eisler on 2/18/17.
@@ -87,7 +87,7 @@ class Requests:NSObject,NSURLConnectionDelegate{
                 
             else if (status == "error") {
                 if connection == getMainFeed {
-                    sendErrorNotification(responseDict, name: "patientExistsFailed")
+                    sendErrorNotification(responseDict, name: "getMainFeedFailed")
                 }
                 
             }
@@ -128,7 +128,7 @@ class Requests:NSObject,NSURLConnectionDelegate{
             
         }
     }
-
+    
     
     func sendErrorNotification(_ responseDict:NSDictionary, name:String){
         let errorMessage = responseDict.value(forKey: "errorMessage") as! String;
@@ -138,4 +138,3 @@ class Requests:NSObject,NSURLConnectionDelegate{
         NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: self, userInfo: errorDict)
     }
 }
-

@@ -2,7 +2,7 @@
 from flask import Flask, request, jsonify
 from flaskext.mysql import MySQL
 
-from article import Article
+#from article import Article
 
 import os
 app = Flask(__name__)
@@ -41,8 +41,8 @@ def index():
         returnDict = {"status": "ok", "data": "Server is working"}
         return jsonify(returnDict)
 
-app.run(debug = True)
+#app.run(debug = True)
 
-#port = int(os.environ.get('PORT', 5000))
-#app.run(debug=True, host="0.0.0.0", port=port)
+port = int(os.environ.get('PORT', 5000))
+app.run(debug=True, host="0.0.0.0", port=port)
 
