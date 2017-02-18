@@ -51,6 +51,17 @@ def index():
             returnDict = {"status": "ok", "data": articleDicts}
         return jsonify(returnDict)
 
+def parse_articles():
+    pass
+
+def parse_users():
+    pass
+
+def parse_groups():
+    pass
+
+def parse_events():
+    pass
 # app.run(debug = True)
 
 port = int(os.environ.get('PORT', 5000))
