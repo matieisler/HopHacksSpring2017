@@ -57,6 +57,7 @@ def parse_articles():
 def parse_users():
     pass
 
+@app.route('/getGroups', methods=['POST'])
 def parse_groups():
     if request.method == 'POST':
         json = request.get_json()
