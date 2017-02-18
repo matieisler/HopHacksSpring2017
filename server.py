@@ -87,16 +87,17 @@ def groups_format(data):
 
 @app.route('/getUsers', methods=['POST'])
 def parse_users():
+	userDicts = []
 	if request.method == 'POST':
 		json = request.get_json()
-		cursor.execute("SELECT * FROM Users;")
-		data = cursor.fetchall()
+		user_id = json["id"]
+		cursor.execute("SELECT * FROM Users WHERE id=%s;", user_id)
+		data = cursor.fetchone()
 		if data is None:
 			returnDict = {"status": "ok"}
 		else:
 			usersDict = []
 			for user in data:
-				id_user = user[0]
 				info = user[1]
 				name = user[2]
 				last_name = user[3]
@@ -106,12 +107,36 @@ def parse_users():
 				user_type = user[7]
 				file_id = user[8]
 				
-				userDict = {"id_user": id_user, "info": info, "name": name,
-							 "last_name": last_name, "gender": gender, "email_id": email_id,
-							 "phone_id": phone_id, "user_type": user_type, "image_url": file_id}
+				userDict = {"user_id": user_id, "info": info, "name": name,
+							 "last_name": last_name, "gender": gender, "email": email_id,
+							 "phone": phone_id, "user_type": user_type, "image_url": file_id}
 				userDicts.append(userDict)
 			returnDict = {"status": "ok", "data": userDicts}
 		return jsonify(returnDict)
+	pass
+
+def get_user(user_id):
+	if request.method == 'POST':
+		json = request.get_json()
+		cursor.execute("SELECT * FROM Users WHERE id=%s;", user_id)
+		data = cursor.fetchone()
+		if data is None:
+			returnDict = {"status": "ok"}
+		else:
+			for user in data:
+				info = user[1]
+				name = user[2]
+				last_name = user[3]
+				gender = user[4]
+				email_id = user[5]
+				phone_id = user[6]
+				user_type = user[7]
+				file_id = user[8]
+				
+				userDict = {"user_id": user_id, "info": info, "name": name,
+							 "last_name": last_name, "gender": gender, "email": email_id,
+							 "phone": phone_id, "user_type": user_type, "image_url": file_id}
+		return userDict
 	pass
 
 
@@ -204,9 +229,12 @@ def getMisc():
 					image_url = post[3]
 					post_type = post[4]
 					user_id = post[5]
+					user = get_user(user_id)
 					date_posted = str(post[6])
-				postDict = {"id": post_id, "title": title, "content": content, "image_url": image_url,
-						   "post_type": post_type, "user_id": user_id, "date_posted": date_posted}
+					postDict = {"id": post_id, "title": title, 
+							"content": content, "image_url": image_url,
+						   "post_type": post_type, "user_id": user_id, 
+						   "date_posted": date_posted, "user": user}
 				miscDicts.append(postDict)
 			returnDict = {"status": "ok", "data": miscDicts}
 		return jsonify(returnDict)
