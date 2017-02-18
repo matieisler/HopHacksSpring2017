@@ -211,7 +211,7 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     group.email = groupDict["email"] as! String
                     group.typeName = groupDict["group_type_name"] as! String
                     group.imageURL = groupDict["image_url"] as! String
-                    globalVars.receivedGroups?.append(event)
+                    globalVars.receivedGroups?.append(group)
                 } else {
                     globalVars.receivedGroups?.append(DatabaseManager.getItem(entityName: "Group", predicateString: "id=\(groupDict["group_id"] as! Int16)") as! Group)
                 }
