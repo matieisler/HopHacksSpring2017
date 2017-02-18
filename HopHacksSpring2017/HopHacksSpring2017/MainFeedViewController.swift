@@ -17,6 +17,11 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        self.navigationController?.navigationBar.topItem?.title = "Main Feed"
+        
+        let dict: NSDictionary = ["user_id": "1"]
+        Requests.sharedInstance.sendRequest(dict, action: "getMainFeed")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -24,11 +29,11 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return GlobalVariables.sharedInstance().rowHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "groupCell")!
+        return tableView.dequeueReusableCell(withIdentifier: "mainFeedCell")!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

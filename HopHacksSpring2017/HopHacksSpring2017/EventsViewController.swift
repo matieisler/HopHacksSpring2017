@@ -17,6 +17,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        self.navigationController?.navigationBar.topItem?.title = "Events"
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -24,16 +26,16 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return GlobalVariables.sharedInstance().rowHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "groupCell")!
+        return tableView.dequeueReusableCell(withIdentifier: "eventCell")!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: false)
-        self.performSegue(withIdentifier: "goToShowArticleSegue", sender: self)
+        self.performSegue(withIdentifier: "goToOrganizationSegue", sender: self)
     }
 
     

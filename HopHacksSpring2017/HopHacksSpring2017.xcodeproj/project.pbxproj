@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA4FC89F1E580EF700683059 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC89E1E580EF700683059 /* GlobalVariables.swift */; };
+		CA4FC8A11E58249300683059 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC8A01E58249300683059 /* Request.swift */; };
+		CA4FC8A31E58268B00683059 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC8A21E58268B00683059 /* DatabaseManager.swift */; };
 		CAF9D6C91E57E605008C104C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6C81E57E605008C104C /* AppDelegate.swift */; };
-		CAF9D6CB1E57E605008C104C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6CA1E57E605008C104C /* ViewController.swift */; };
 		CAF9D6CE1E57E605008C104C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF9D6CC1E57E605008C104C /* Main.storyboard */; };
 		CAF9D6D11E57E605008C104C /* HopHacksSpring2017.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CAF9D6CF1E57E605008C104C /* HopHacksSpring2017.xcdatamodeld */; };
 		CAF9D6D31E57E605008C104C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAF9D6D21E57E605008C104C /* Assets.xcassets */; };
@@ -22,9 +24,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA4FC89E1E580EF700683059 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
+		CA4FC8A01E58249300683059 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		CA4FC8A21E58268B00683059 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		CA4FC8A51E58272300683059 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAF9D6C51E57E605008C104C /* HopHacksSpring2017.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HopHacksSpring2017.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF9D6C81E57E605008C104C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CAF9D6CA1E57E605008C104C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CAF9D6CD1E57E605008C104C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CAF9D6D01E57E605008C104C /* HopHacksSpring2017.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HopHacksSpring2017.xcdatamodel; sourceTree = "<group>"; };
 		CAF9D6D21E57E605008C104C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,11 +54,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA4FC8A41E58272300683059 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CA4FC8A51E58272300683059 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CAF9D6BC1E57E605008C104C = {
 			isa = PBXGroup;
 			children = (
 				CAF9D6C71E57E605008C104C /* HopHacksSpring2017 */,
 				CAF9D6C61E57E605008C104C /* Products */,
+				CA4FC8A41E58272300683059 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,9 +83,11 @@
 			isa = PBXGroup;
 			children = (
 				CAF9D6C81E57E605008C104C /* AppDelegate.swift */,
-				CAF9D6CA1E57E605008C104C /* ViewController.swift */,
 				CAF9D6CC1E57E605008C104C /* Main.storyboard */,
+				CA4FC8A01E58249300683059 /* Request.swift */,
+				CA4FC8A21E58268B00683059 /* DatabaseManager.swift */,
 				CAF9D6E71E5807D8008C104C /* EventsViewController.swift */,
+				CA4FC89E1E580EF700683059 /* GlobalVariables.swift */,
 				CAF9D6DF1E5806E9008C104C /* GroupsViewController.swift */,
 				CAF9D6E11E580776008C104C /* MainFeedViewController.swift */,
 				CAF9D6E51E5807B6008C104C /* ProfileViewController.swift */,
@@ -158,13 +174,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAF9D6CB1E57E605008C104C /* ViewController.swift in Sources */,
 				CAF9D6E21E580776008C104C /* MainFeedViewController.swift in Sources */,
+				CA4FC8A31E58268B00683059 /* DatabaseManager.swift in Sources */,
 				CAF9D6E41E58079F008C104C /* MiscViewController.swift in Sources */,
 				CAF9D6DE1E58034D008C104C /* TabBarController.swift in Sources */,
+				CA4FC89F1E580EF700683059 /* GlobalVariables.swift in Sources */,
 				CAF9D6C91E57E605008C104C /* AppDelegate.swift in Sources */,
 				CAF9D6D11E57E605008C104C /* HopHacksSpring2017.xcdatamodeld in Sources */,
 				CAF9D6E61E5807B6008C104C /* ProfileViewController.swift in Sources */,
+				CA4FC8A11E58249300683059 /* Request.swift in Sources */,
 				CAF9D6E01E5806E9008C104C /* GroupsViewController.swift in Sources */,
 				CAF9D6E81E5807D8008C104C /* EventsViewController.swift in Sources */,
 			);
@@ -330,6 +348,7 @@
 				CAF9D6DC1E57E605008C104C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

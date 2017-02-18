@@ -8,10 +8,42 @@
 
 import UIKit
 
-class MiscViewController: UIViewController {
+class MiscViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        self.navigationController?.navigationBar.topItem?.title = "Events"
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 250
+        }
+        return GlobalVariables.sharedInstance().rowHeight
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            return tableView.dequeueReusableCell(withIdentifier: "settingsCell")!
+        }
+        return tableView.dequeueReusableCell(withIdentifier: "miscCell")!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: false)
+        if indexPath.row != 0 {
+            self.performSegue(withIdentifier: "goToOrganizationSegue", sender: self)
+        }
     }
     
 }
