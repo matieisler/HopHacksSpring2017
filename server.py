@@ -74,11 +74,12 @@ def groups_format(data):
 		group_type_id = group[6]
 		cursor.execute("SELECT * FROM Group_Types WHERE id=%s;", group_type)
 		data = cursor.fetchone()
+		description = group[7]
 		group_type_name = cursor.fetchone()[1]
 		
 		groupDict = {"id_group": id_group, "user_id": user_id, "image_url": file_id,
 					 "group_name": group_name, "phone": phone, "email": email,
-					 "group_type_name": group_type_name}
+					 "group_type_name": group_type_name, "description": description}
 		groupDicts.append(groupDict)
 	returnDict = {"status": "ok", "data": groupDicts}
 
