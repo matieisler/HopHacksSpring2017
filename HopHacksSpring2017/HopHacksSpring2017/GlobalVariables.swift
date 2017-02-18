@@ -18,6 +18,8 @@ class GlobalVariables {
     
     let rowHeight = CGFloat(200.0)
     var receivedEvents: [Event]?
+    var receivedGroups: [Group]?
+    var receivedMisc: [Misc]?
     
     class func sharedInstance() -> GlobalVariables {
         return _globalVariablesInstance;

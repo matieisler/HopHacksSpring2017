@@ -50,8 +50,6 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
             let image = UIImage(data: data! as Data)!
             (cell.viewWithTag(1) as! UIImageView).image = image
         }
-
-        
         return cell
     }
     

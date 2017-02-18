@@ -24,6 +24,9 @@ class Requests:NSObject,NSURLConnectionDelegate{
     
     var getMainFeed: NSURLConnection?
     var getEvents: NSURLConnection?
+    var getGroups: NSURLConnection?
+    var getMisc: NSURLConnection?
+    var getUser: NSURLConnection?
     
     
     let server = GlobalVariables.sharedInstance().server
@@ -52,6 +55,12 @@ class Requests:NSObject,NSURLConnectionDelegate{
             getMainFeed = NSURLConnection(request: request as URLRequest, delegate: self)
         case "getEvents":
             getEvents = NSURLConnection(request: request as URLRequest, delegate: self)
+        case "getGroups":
+            getGroups = NSURLConnection(request: request as URLRequest, delegate: self)
+        case "getMisc":
+            getMisc = NSURLConnection(request: request as URLRequest, delegate: self)
+        case "getUser":
+            getUser = NSURLConnection(request: request as URLRequest, delegate: self)
         default:
             break;
         }
@@ -86,6 +95,12 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     getMainFeed(responseDict)
                 } else if connection == getEvents {
                     getEvents(responseDict)
+                } else if connection == getGroups {
+                    getGroups(responseDict)
+                } else if connection == getMisc {
+                    getMisc(responseDict)
+                } else if connection == getUser {
+                    getUser(responseDict)
                 }
             }
                 
@@ -93,7 +108,13 @@ class Requests:NSObject,NSURLConnectionDelegate{
                 if connection == getMainFeed {
                     sendErrorNotification(responseDict, name: "getMainFeedFailed")
                 } else if connection == getEvents {
-                    sendErrorNotification(responseDict, name: "getEvents")
+                    sendErrorNotification(responseDict, name: "getEventsFailed")
+                } else if connection == getGroups {
+                    sendErrorNotification(responseDict, name: "getGroupsFailed")
+                } else if connection == getMisc {
+                    sendErrorNotification(responseDict, name: "getMiscFailed")
+                } else if connection == getUser {
+                    sendErrorNotification(responseDict, name: "getUserFailed")
                 }
                 
             }
@@ -115,7 +136,13 @@ class Requests:NSObject,NSURLConnectionDelegate{
         if connection == getMainFeed {
             sendErrorNotification(errorDict as NSDictionary, name: "getMainFeedFailed");
         } else if connection == getEvents {
-            sendErrorNotification(errorDict as NSDictionary, name: "getEvents")
+            sendErrorNotification(errorDict as NSDictionary, name: "getEventsFailed")
+        } else if connection == getGroups {
+            sendErrorNotification(errorDict as NSDictionary, name: "getGroupsFailed")
+        } else if connection == getMisc {
+            sendErrorNotification(errorDict as NSDictionary, name: "getMiscFailed")
+        } else if connection == getUser {
+            sendErrorNotification(errorDict as NSDictionary, name: "getUserFailed")
         }
         
     }
@@ -186,15 +213,30 @@ class Requests:NSObject,NSURLConnectionDelegate{
     }
     
     
-    
-    func sendErrorNotification(_ responseDict:NSDictionary, name:String){
-        let errorMessage = responseDict.value(forKey: "errorMessage") as! String;
-        let errorDict: Dictionary<String,String>! = [
-            "error": errorMessage,
-            ]
-        NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: self, userInfo: errorDict)
+    func getMisc(_ responseDict: NSDictionary) {
+        if let data = responseDict["data"] as? NSArray {
+            let globalVars = GlobalVariables.sharedInstance()
+            globalVars.receivedMisc = [Misc]()
+            for element in data {
+                let miscDict = element as! NSDictionary
+                if DatabaseManager.getItem(entityName: "Misc", predicateString: "id=\(miscDict["id"] as! Int16)") == nil {
+                    let misc = DatabaseManager.insertObject(entityName: "Misc") as! Misc
+                    misc.id = miscDict["id"] as! Int16
+                    misc.title = miscDict["title"] as! String
+                    misc.content = miscDict["content"] as! String
+                    misc.imageURL = miscDict["image_url"] as! String
+                    misc.postType = miscDict["post_type"] as! String
+                    misc.userID = miscDict["user_id"] as! Int16
+                    misc.datePosted = Tools.dateTimeToNSDate(dateTime: miscDict["date_posted"] as! String)! as NSDate?
+                    globalVars.receivedMisc?.append(misc)
+                } else {
+                    globalVars.receivedEvents?.append(DatabaseManager.getItem(entityName: "Event", predicateString: "id=\(miscDict["id"] as! Int16)") as! Event)
+                }
+            }
+            try! managedObjectContext.save()
+        }
     }
-
+    
     func getGroups(_ responseDict: NSDictionary) {
         if let data = responseDict["data"] as? NSArray {
             let globalVars = GlobalVariables.sharedInstance()
@@ -204,13 +246,12 @@ class Requests:NSObject,NSURLConnectionDelegate{
                 if DatabaseManager.getItem(entityName: "Group", predicateString: "id=\(groupDict["group_id"] as! Int16)") == nil {
                     let group = DatabaseManager.insertObject(entityName: "Group") as! Group
                     group.id = groupDict["group_id"] as! Int16
-                    group.user_id = groupDict["user_id"] as! String
                     group.name = groupDict["group_name"] as! String
                     group.phone = groupDict["phone"] as! String
-                    group.title = groupDict["title"] as! String
                     group.email = groupDict["email"] as! String
                     group.typeName = groupDict["group_type_name"] as! String
                     group.imageURL = groupDict["image_url"] as! String
+                    group.descript = groupDict["description"] as! String
                     globalVars.receivedGroups?.append(group)
                 } else {
                     globalVars.receivedGroups?.append(DatabaseManager.getItem(entityName: "Group", predicateString: "id=\(groupDict["group_id"] as! Int16)") as! Group)
@@ -219,5 +260,20 @@ class Requests:NSObject,NSURLConnectionDelegate{
             try! managedObjectContext.save()
         }
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "getGroupsFinished"), object: nil)
+    }
+    
+    func getUsers(_ responseDict: NSDictionary) {
+        if let data = responseDict["data"] as? NSArray {
+            
+        }
+    }
+    
+    
+    func sendErrorNotification(_ responseDict:NSDictionary, name:String){
+        let errorMessage = responseDict.value(forKey: "errorMessage") as! String;
+        let errorDict: Dictionary<String,String>! = [
+            "error": errorMessage,
+            ]
+        NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: self, userInfo: errorDict)
     }
 }
