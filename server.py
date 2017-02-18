@@ -58,6 +58,36 @@ def parse_users():
     pass
 
 def parse_groups():
+    if request.method == 'POST':
+        json = request.get_json()
+        cursor.execute("SELECT * FROM Groups;")
+        data = cursor.fetchall()
+        if data is None:
+            returnDict = {"status": "ok"}
+        else:
+            groupsDict = []
+            for group in data:
+                id_group = group[0]
+                user_id = group[1]
+                file_id = group[2]
+                group_name = group[3]
+                phone_id = group[4]
+                cursor.execute("SELECT * FROM Phones WHERE id=%s", phone_id)
+                phone = cursor.fetchone()[1]
+                email_id = group[5]
+                cursor.execute("SELECT * FROM Emails WHERE id=%s", email_id)
+                email = cursor.fetchone()[1]
+                group_type_id = group[6]
+                cursor.execute("SELECT * FROM Group_Types WHERE id=%s;", group_type)
+                data = cursor.fetchone()
+                group_type_name = cursor.fetchone()[1]
+                
+                groupDict = {"id_group": id_group, "user_id": user_id, "file_id": file_id,
+                             "group_name": group_name, "phone": phone, "email", email,
+                             "group_type_name": group_type_name}
+                groupDicts.append(articleDict)
+            returnDict = {"status": "ok", "data": articleDicts}
+        return jsonify(returnDict)
     pass
 
 def parse_events():
