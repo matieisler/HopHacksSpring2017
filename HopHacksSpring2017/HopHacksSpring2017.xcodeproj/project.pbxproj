@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA4C4DA01E58509E000600A9 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4C4D9F1E58509E000600A9 /* ArticleViewController.swift */; };
 		CA4FC89F1E580EF700683059 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC89E1E580EF700683059 /* GlobalVariables.swift */; };
 		CA4FC8A31E58268B00683059 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC8A21E58268B00683059 /* DatabaseManager.swift */; };
 		CA4FC8A81E582E7E00683059 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC8A71E582E7E00683059 /* Requests.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA4C4D9F1E58509E000600A9 /* ArticleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
 		CA4FC89E1E580EF700683059 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		CA4FC8A21E58268B00683059 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		CA4FC8A51E58272300683059 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -90,6 +92,7 @@
 				CA4FC89E1E580EF700683059 /* GlobalVariables.swift */,
 				CAF9D6DF1E5806E9008C104C /* GroupsViewController.swift */,
 				CAF9D6E11E580776008C104C /* MainFeedViewController.swift */,
+				CA4C4D9F1E58509E000600A9 /* ArticleViewController.swift */,
 				CAF9D6E51E5807B6008C104C /* ProfileViewController.swift */,
 				CAF9D6E31E58079F008C104C /* MiscViewController.swift */,
 				CAF9D6DD1E58034D008C104C /* TabBarController.swift */,
@@ -175,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAF9D6E21E580776008C104C /* MainFeedViewController.swift in Sources */,
+				CA4C4DA01E58509E000600A9 /* ArticleViewController.swift in Sources */,
 				CA4FC8A31E58268B00683059 /* DatabaseManager.swift in Sources */,
 				CAF9D6E41E58079F008C104C /* MiscViewController.swift in Sources */,
 				CAF9D6DE1E58034D008C104C /* TabBarController.swift in Sources */,

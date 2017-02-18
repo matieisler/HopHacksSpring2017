@@ -14,12 +14,14 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet var barItem: UITabBarItem!
     
     var articles = [Article]()
+    var articleToSend = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         
         self.navigationController?.navigationBar.topItem?.title = "Main Feed"
         
@@ -39,11 +41,14 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainFeedCell")!
+        (cell.viewWithTag(2) as! UILabel).text = articles[indexPath.row].title
+        (cell.viewWithTag(3) as! UILabel).text = articles[indexPath.row].content
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: false)
+        articleToSend = indexPath.row
         self.performSegue(withIdentifier: "goToShowArticleSegue", sender: self)
     }
     
@@ -66,6 +71,10 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
         barItem.image = image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         barItem.selectedImage = image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         barItem.title = ""
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        (segue.destination as! ArticleViewController).article = articles[articleToSend]
     }
 
     

@@ -136,16 +136,13 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     article.content = content
                     article.title = title
                     article.publisherName = publisherName
+                    article.modelDeleted = false
                 }
-            }
-            do {
-                try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.save()
-                //post notification here
-            } catch {
-                print("EXCEPTION")
             }
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "getMainFeedFinished"), object: nil)
+            
+            try! managedObjectContext.save()
         }
     }
     

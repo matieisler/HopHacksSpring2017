@@ -15,8 +15,10 @@ class TabBarController: UITabBarController {
         
         (self.childViewControllers[2] as! MainFeedViewController).loadImage()
         
-        self.tabBar.shadowImage = UIImage()
-        self.tabBar.backgroundImage = UIImage()
+        //self.tabBar.shadowImage = UIImage()
+        //self.tabBar.backgroundImage = UIImage()
+        
+        self.selectedIndex = 2
     }
     
     
