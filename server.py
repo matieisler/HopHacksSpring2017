@@ -59,7 +59,7 @@ def articles_format(data):
 
 
 def groups_format(data):
-	groupsDict = []
+	groupDicts = []
 	for group in data:
 		id_group = group[0]
 		user_id = group[1]
@@ -82,6 +82,7 @@ def groups_format(data):
 					 "group_type_name": group_type_name, "description": description}
 		groupDicts.append(groupDict)
 	returnDict = {"status": "ok", "data": groupDicts}
+	return jsonify(returnDict)
 
 
 @app.route('/getUsers', methods=['POST'])
