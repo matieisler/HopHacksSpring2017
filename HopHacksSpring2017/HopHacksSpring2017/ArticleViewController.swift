@@ -17,7 +17,7 @@ class ArticleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         switch mode {
             //0 for article, 1 for event
         case 0:
