@@ -54,7 +54,33 @@ def index():
 def parse_articles():
     pass
 
+@app.route('/getUsers', methods=['POST'])
 def parse_users():
+    if request.method == 'POST':
+        json = request.get_json()
+        cursor.execute("SELECT * FROM Users;")
+        data = cursor.fetchall()
+        if data is None:
+            returnDict = {"status": "ok"}
+        else:
+            usersDict = []
+            for user in data:
+                id_user = user[0]
+                info = user[1]
+                name = user[2]
+                last_name = user[3]
+                gender = user[4]
+                email_id = user[5]
+                phone_id = user[6]
+                user_type = user[7]
+                file_id = user[8]
+                
+                userDict = {"id_user": id_user, "info": info, "name": name,
+                             "last_name": last_name, "gender": gender, "email_id": email_id,
+                             "phone_id": phone_id, "user_type": user_type, "file_id": file_id}
+                userDicts.append(userDict)
+            returnDict = {"status": "ok", "data": userDicts}
+        return jsonify(returnDict)
     pass
 
 @app.route('/getGroups', methods=['POST'])
