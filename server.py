@@ -203,8 +203,9 @@ def getMisc():
 					content = post[2]
 					image_url = post[3]
 					post_type = post[4]
+					user_id = post[5]
 				postDict = {"id": post_id, "title": title, "content": content, "image_url": image_url,
-						   "post_type": post_type}
+						   "post_type": post_type, "user_id": user_id}
 				miscDicts.append(postDict)
 			returnDict = {"status": "ok", "data": miscDicts}
 		return jsonify(returnDict)
