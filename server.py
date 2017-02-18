@@ -91,8 +91,17 @@ def parse_groups():
         return jsonify(returnDict)
     pass
 
+@app.route('/getEvents', methods=['POST'])
 def parse_events():
-    data = cursor.fetchall()
+    if request.method == 'POST':
+        json = request.get_json()
+        startDate = json["start_date"]
+        endDate = json["end_date"]
+        if startDate is None and endDate is None:
+            cursor.execute("SELECT * FROM Events;")
+        else:
+            cursor.execute("SELECT * FROM Events WHERE start_date >= %s AND end_date <= %s;", (startDate, endDate))
+        data = cursor.fetchall()
     if data is None:
         returnDict = {"status": "ok"}
     else:
