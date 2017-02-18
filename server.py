@@ -75,7 +75,7 @@ def groups_format(data):
 		cursor.execute("SELECT * FROM Group_Types WHERE id=%s;", group_type_id)
 		data = cursor.fetchone()
 		description = group[7]
-		group_type_name = cursor.fetchone()[1]
+		group_type_name = data[1]
 		
 		groupDict = {"id_group": id_group, "user_id": user_id, "image_url": file_id,
 					 "group_name": group_name, "phone": phone, "email": email,
