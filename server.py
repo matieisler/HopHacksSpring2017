@@ -2,7 +2,7 @@
 from flask import Flask, request, jsonify
 from flaskext.mysql import MySQL
 
-#from article import Article
+from article import Article
 
 import os
 app = Flask(__name__)
@@ -28,21 +28,20 @@ cursor = conn.cursor()
 def index():
     if request.method == 'POST':
         json = request.get_json()
-        id = json["id"]
-        cursor.execute("SELECT title, info_file, publisher_id from Article WHERE id=%s;", (id,))
+        cursor.execute("SELECT title, info_file, publisher_id from Article WHERE id='1';", (id,))
         data = cursor.fetchone()
 
         if data is None:
             data = {"exists": "false"}
         else:
             data = {"exists": "true"}
-        article = Article(data[0], data[1], data[2])
+        #article = Article(data[0], data[1], data[2])
         print(article.title)        
         returnDict = {"status": "ok", "data": "Server is working"}
         return jsonify(returnDict)
 
-#app.run(debug = True)
+app.run(debug = True)
 
-port = int(os.environ.get('PORT', 5000))
-app.run(debug=True, host="0.0.0.0", port=port)
+#port = int(os.environ.get('PORT', 5000))
+#app.run(debug=True, host="0.0.0.0", port=port)
 
