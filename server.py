@@ -32,23 +32,6 @@ def parse_articles():
 			returnDict = {"status": "ok"}
 		else:
 			articleDicts = []
-			'''for article in data:
-				id_article = article[0]
-				file_id = article[1]
-				title = article[2]
-				publisher_id = article[3]
-
-				cursor.execute("SELECT * FROM Groups WHERE id=%s;", publisher_id)
-				data = cursor.fetchone()
-				
-				publisher_name = data[3]
-				
-				content = article[4]
-				article_type = article[5]
-				articleDict = {"id": id_article, "file_id": file_id, "title": title, "publisher_name": publisher_name,
-							   "content": content, "article_type": article_type}
-				articleDicts.append(articleDict)
-			returnDict = {"status": "ok", "data": articleDicts}'''
 			returnDict = articles_format(data)
 		return jsonify(returnDict)
 
@@ -170,7 +153,7 @@ def parse_events():
 			group_id = cursor.fetchone()[3]
 			
 			eventDict = {"id": id_event, "start_date": start_date, "end_date": end_date, "title": title,
-						   "info_file": info_file, "location": location, "host_name": group_id, "file_url": file_url}
+						   "info_file": info_file, "location": location, "host_name": group_id, "image_url": file_url}
 			dicts.append(eventDict)
 		returnDict = {"status": "ok", "data": dicts}
 	return jsonify(returnDict)
