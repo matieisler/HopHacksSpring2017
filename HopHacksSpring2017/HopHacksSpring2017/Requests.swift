@@ -37,7 +37,6 @@ class Requests:NSObject,NSURLConnectionDelegate{
     func sendRequest(_ jsonDict:NSDictionary, action:String ){
         currentConnectionString = action;
         let request = NSMutableURLRequest(url: URL(string: "\(server)/\(action)")!);
-        print("\(server)/\(action)")
         request.httpMethod = "POST"
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: jsonDict, options: [])

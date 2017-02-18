@@ -37,9 +37,15 @@ def index():
                 file_id = article[1]
                 title = article[2]
                 publisher_id = article[3]
+
+                cursor.execute("SELECT * FROM Groups WHERE id=%s;", publisher_id)
+                data = cursor.fetchone()
+                
+                publisher_name = data[3]
+                
                 info_file = article[4]
                 article_type = article[5]
-                articleDict = {"id": id_article, "file_id": file_id, "title": title, "user_id": publisher_id,
+                articleDict = {"id": id_article, "file_id": file_id, "title": title, "publisher_name": publisher_name,
                                "info_file": info_file, "article_type": article_type}
                 articleDicts.append(articleDict)
             returnDict = {"status": "ok", "data": articleDicts}

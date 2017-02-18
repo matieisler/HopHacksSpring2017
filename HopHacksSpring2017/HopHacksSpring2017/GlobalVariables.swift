@@ -13,8 +13,9 @@ private let _globalVariablesInstance : GlobalVariables = { GlobalVariables() } (
 
 class GlobalVariables {
     
-    let server = "http://10.189.91.61:5000"
-
+    //let server = "http://10.189.23.24:5000"
+    let server = "http://127.0.0.1:5000"
+    
     let rowHeight = CGFloat(200.0)
     
     class func sharedInstance() -> GlobalVariables {
