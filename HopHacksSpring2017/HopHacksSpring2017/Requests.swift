@@ -123,8 +123,29 @@ class Requests:NSObject,NSURLConnectionDelegate{
     }
     
     func getMainFeed(_ responseDict: NSDictionary) {
-        if let data = responseDict["data"] as? NSDictionary {
+        if let data = responseDict["data"] as? NSArray {
+            for art in data {
+                let articleDict = art as! NSDictionary
+                let content = articleDict["content"] as! String
+                let id = articleDict["id"] as! Int
+                let title = articleDict["title"] as! String
+                let publisherName = articleDict["publisher_name"] as! String
+                if DatabaseManager.getItem(entityName: "Article", predicateString: "id=\(id)") == nil {
+                    let article = DatabaseManager.insertObject(entityName: "Article") as! Article
+                    article.id = Int16(id)
+                    article.content = content
+                    article.title = title
+                    article.publisherName = publisherName
+                }
+            }
+            do {
+                try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.save()
+                //post notification here
+            } catch {
+                print("EXCEPTION")
+            }
             
+            NotificationCenter.default.post(name: "getMainFeedFinished", object: nil)
         }
     }
     

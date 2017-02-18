@@ -12,6 +12,8 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet var tableView: UITableView!
     
+    var articles = [Article]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,12 +22,14 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.navigationController?.navigationBar.topItem?.title = "Main Feed"
         
+        NotificationCenter.default.addObserver(self, selector: #selector(MainFeedViewController.reloadData), name: NSNotification.Name(rawValue: "getMainFeedFinished"), object: nil)
+        
         let dict: NSDictionary = ["user_id": "1"]
         Requests.sharedInstance.sendRequest(dict, action: "getMainFeed")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return articles.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -33,12 +37,18 @@ class MainFeedViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "mainFeedCell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mainFeedCell")!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: false)
         self.performSegue(withIdentifier: "goToShowArticleSegue", sender: self)
+    }
+    
+    func reloadData() {
+        articles = DatabaseManager.getFromDatabase(entityName: "Article") as! [Article]
+        tableView.reloadData()
     }
 
     
