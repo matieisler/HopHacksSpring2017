@@ -182,6 +182,33 @@ def filterByType():
 				returnDicts.append(returnDict)
 		return returnDicts
 
+@app.route('/getMisc', methods=['POST'])
+def getMisc():
+	miscDicts = []
+	if request.method == 'POST':
+		json = request.get_json()
+		types = json["types"]
+		for typ in types:
+			cursor.execute("SELECT * FROM Misc_Types WHERE type=%s", typ)
+			data = cursor.fetchone()
+			type_id = data[0]
+			cursor.execute("SELECT * FROM Misc WHERE type=%s", type_id)
+			data = cursor.fetchall()
+			for post in data:
+				if data is None:
+					returnDict = {"status": "ok"}
+				else:
+					post_id = post[0]
+					title = post[1]
+					content = post[2]
+					image_url = post[3]
+					post_type = post[4]
+				postDict = {"id": post_id, "title": title, "content": content, "image_url": image_url,
+						   "post_type": post_type}
+				miscDicts.append(postDict)
+			returnDict = {"status": "ok", "data": miscDicts}
+		return jsonify(returnDict)
+
 # app.run(debug = True)
 
 port = int(os.environ.get('PORT', 5000))
