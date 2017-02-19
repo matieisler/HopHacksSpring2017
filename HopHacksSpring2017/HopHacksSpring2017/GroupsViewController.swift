@@ -68,6 +68,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         (segue.destination as! GroupViewController).group = groups[selectedGroup]
         (segue.destination as! GroupViewController).image = (tableView.cellForRow(at: IndexPath(row: selectedGroup, section: 0))?.viewWithTag(1) as! UIImageView).image!
+        (segue.destination as! GroupViewController).mode = 0
     }
     
 }

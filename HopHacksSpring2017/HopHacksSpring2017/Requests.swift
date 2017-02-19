@@ -228,13 +228,16 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     misc.postType = miscDict["post_type"] as! String
                     misc.userID = miscDict["user_id"] as! Int16
                     misc.datePosted = Tools.dateTimeToNSDate(dateTime: miscDict["date_posted"] as! String)! as NSDate?
+                    misc.modelDeleted = false
                     globalVars.receivedMisc?.append(misc)
                 } else {
-                    globalVars.receivedEvents?.append(DatabaseManager.getItem(entityName: "Event", predicateString: "id=\(miscDict["id"] as! Int16)") as! Event)
+                    globalVars.receivedMisc?.append(DatabaseManager.getItem(entityName: "Misc", predicateString: "id=\(miscDict["id"] as! Int16)") as! Misc)
                 }
             }
+            
             try! managedObjectContext.save()
         }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "getMiscFinished"), object: nil)
     }
     
     func getGroups(_ responseDict: NSDictionary) {

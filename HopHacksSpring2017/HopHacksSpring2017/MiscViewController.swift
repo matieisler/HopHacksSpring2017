@@ -12,6 +12,10 @@ class MiscViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var tableView: UITableView!
     
+    var miscs = [Misc]()
+    
+    var selectedMisc = -1
+    
     var freeAndForSaleButton: OnOffButton!
     var textbookExchangeButton: OnOffButton!
     var pickupSportsButton: OnOffButton!
@@ -27,21 +31,24 @@ class MiscViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.navigationController?.navigationBar.topItem?.title = "Miscellaneous"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(EventsViewController.reloadData), name: NSNotification.Name(rawValue: "getMiscFinished"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MiscViewController.reloadData), name: NSNotification.Name(rawValue: "getMiscFinished"), object: nil)
         
         
         let defaults = UserDefaults.standard
-        var prefs = ["free_and_for_sale", "textboook_exchange", "pickup_sports", "ride_share", "roommate_search", "entertainment"]
+        var prefs = ["free_and_for_sale", "textbook_exchange", "pickup_sports", "ride_share", "roommate_search", "entertainment"]
         if let storedArray = defaults.value(forKey: "miscPreferences") as? NSArray {
             prefs = storedArray as! [String]
         }
+        
         let dict = ["types": prefs]
+        
+        
 
         Requests.sharedInstance.sendRequest(dict as NSDictionary, action: "getMisc")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return miscs.count + 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -63,37 +70,56 @@ class MiscViewController: UIViewController, UITableViewDelegate, UITableViewData
             roommateSearchButton = cell.viewWithTag(5) as! OnOffButton
             entertainmentButton = cell.viewWithTag(6)  as! OnOffButton
             
+            freeAndForSaleButton.addTarget(self, action: #selector(MiscViewController.reloadFromLocalDatabase), for: .touchUpInside)
+            textbookExchangeButton.addTarget(self, action: #selector(MiscViewController.reloadFromLocalDatabase), for: .touchUpInside)
+            pickupSportsButton.addTarget(self, action: #selector(MiscViewController.reloadFromLocalDatabase), for: .touchUpInside)
+            rideshareButton.addTarget(self, action: #selector(MiscViewController.reloadFromLocalDatabase), for: .touchUpInside)
+            roommateSearchButton.addTarget(self, action: #selector(MiscViewController.reloadFromLocalDatabase), for: .touchUpInside)
+            entertainmentButton.addTarget(self, action: #selector(MiscViewController.reloadFromLocalDatabase), for: .touchUpInside)
+            
             let defaults = UserDefaults.standard
             if let prefs = defaults.value(forKey: "miscPreferences") as? NSArray {
                 if prefs.contains("free_and_for_sale") == false {
-                    freeAndForSaleButton.buttonPressed()
+                    freeAndForSaleButton.setFalse()
                 }
                 if prefs.contains("textbook_exchange") == false {
-                    textbookExchangeButton.buttonPressed()
+                    textbookExchangeButton.setFalse()
                 }
                 if prefs.contains("pickup_sports") == false {
-                    pickupSportsButton.buttonPressed()
+                    pickupSportsButton.setFalse()
                 }
                 if prefs.contains("ride_share") == false {
-                    rideshareButton.buttonPressed()
+                    rideshareButton.setFalse()
                 }
                 if prefs.contains("roommate_search") == false {
-                    roommateSearchButton.buttonPressed()
+                    roommateSearchButton.setFalse()
                 }
                 if prefs.contains("entertainment") == false {
-                    entertainmentButton.buttonPressed()
+                    entertainmentButton.setFalse()
                 }
             }
             
             
             return cell
         }
-        return tableView.dequeueReusableCell(withIdentifier: "miscCell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "miscCell")!
+        (cell.viewWithTag(2) as! UILabel).text = miscs[indexPath.row - 1].title!
+        (cell.viewWithTag(3) as! UILabel).text = miscs[indexPath.row - 1].content!
+        
+        DispatchQueue.main.async {
+            let data = NSData(contentsOf: NSURL(string: self.miscs[indexPath.row - 1].imageURL!)! as URL)
+            let title = self.miscs[indexPath.row - 1].imageURL!
+            let image = UIImage(data: data! as Data)!
+            (cell.viewWithTag(1) as! UIImageView).image = image
+        }
+
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: false)
         if indexPath.row != 0 {
+            selectedMisc = indexPath.row
             self.performSegue(withIdentifier: "goToOrganizationSegue", sender: self)
         }
     }
@@ -122,8 +148,57 @@ class MiscViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let defaults = UserDefaults.standard
         defaults.setValue(selectedButtons, forKey: "miscPreferences")
+        defaults.synchronize()
         
         super.viewWillDisappear(animated)
+    }
+    
+    func reloadData() {
+        if let m = GlobalVariables.sharedInstance().receivedMisc {
+            miscs = m
+            tableView.reloadData()
+        }
+    }
+    
+    func reloadFromLocalDatabase() {
+        var selectedButtons = [String]()
+        
+        if freeAndForSaleButton.buttonState {
+            selectedButtons.append("free_and_for_sale")
+        }
+        if textbookExchangeButton.buttonState {
+            selectedButtons.append("textbook_exchange")
+        }
+        if pickupSportsButton.buttonState {
+            selectedButtons.append("pickup_sports")
+        }
+        if rideshareButton.buttonState {
+            selectedButtons.append("ride_share")
+        }
+        if roommateSearchButton.buttonState {
+            selectedButtons.append("roommate_search")
+        }
+        if entertainmentButton.buttonState {
+            selectedButtons.append("entertainment")
+        }
+        
+        var queryString = ""
+        miscs = [Misc]()
+        if selectedButtons.count > 0 {
+            for i in 0...selectedButtons.count - 1 {
+                let m = DatabaseManager.getFromDatabase(entityName: "Misc", predicateString: "postType = \"\(selectedButtons[i])\"") as! [Misc]
+                miscs.append(contentsOf: m)
+            }
+        }
+        tableView.reloadData()
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination as! GroupViewController
+        destination.mode = 1
+        destination.misc = miscs[selectedMisc]
+        destination.image = (tableView.cellForRow(at: IndexPath(row: selectedMisc, section: 0))?.viewWithTag(1) as! UIImageView).image!
     }
     
 }

@@ -31,4 +31,9 @@ class OnOffButton: UIButton {
         }
     }
     
+    func setFalse() {
+        buttonState = false
+        self.backgroundColor = UIColor(colorLiteralRed: 198.0/255.0, green: 198.0/255.0, blue: 198.0/255.0, alpha: 1)
+    }
+    
 }
