@@ -229,6 +229,10 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     misc.userID = miscDict["user_id"] as! Int16
                     misc.datePosted = Tools.dateTimeToNSDate(dateTime: miscDict["date_posted"] as! String)! as NSDate?
                     misc.modelDeleted = false
+                    
+                    if DatabaseManager.getItem(entityName: "User", predicateString: "id=\(misc.userID)) {
+                    
+                    }
                     globalVars.receivedMisc?.append(misc)
                 } else {
                     globalVars.receivedMisc?.append(DatabaseManager.getItem(entityName: "Misc", predicateString: "id=\(miscDict["id"] as! Int16)") as! Misc)

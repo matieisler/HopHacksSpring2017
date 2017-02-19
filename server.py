@@ -224,8 +224,9 @@ def getMisc():
                 image_url = misc[3]
                 user_id = misc[5]
                 date_posted = misc[6]
-
-                miscDict = {"id": id, "title": title, "content": content, "image_url": image_url, "user_id": user_id, "date_posted": str(date_posted), "post_type": type}
+                cursor.execute("SELECT * FROM Users WHERE id=%s;", (user_id,))
+                user = cursor.fetchone()
+                miscDict = {"id": id, "title": title, "content": content, "image_url": image_url, "user_id": user_id, "date_posted": str(date_posted), "post_type": type, "user": user}
                 returnDicts.append(miscDict)
     return jsonify({"status": "ok", "data": returnDicts})
                 

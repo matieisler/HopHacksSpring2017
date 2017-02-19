@@ -30,7 +30,7 @@ class GroupViewController: UIViewController {
             formatter.dateStyle = .short
             formatter.timeStyle = .short
             let dateString = formatter.string(from: misc.datePosted! as Date)
-            (self.view.viewWithTag(4) as! UILabel).text = "\(formatter.string(from: date as Date))"
+            (self.view.viewWithTag(4) as! UILabel).text = "\(formatter.string(from: misc.datePosted! as Date))"
             (self.view.viewWithTag(3) as! UITextView).text = "Date Posted: \(dateString)\n\(misc.content)"
         default:
             break
