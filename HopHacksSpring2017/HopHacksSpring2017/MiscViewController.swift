@@ -30,12 +30,14 @@ class MiscViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.addObserver(self, selector: #selector(EventsViewController.reloadData), name: NSNotification.Name(rawValue: "getMiscFinished"), object: nil)
         
         
-        var dict: NSMutableDictionary = NSMutableDictionary()
         let defaults = UserDefaults.standard
-        if let prefs = defaults.value(forKey: "miscPreferences") as? NSArray {
-            dict.setValue(prefs, forKey: "types")
+        var prefs = ["free_and_for_sale", "textboook_exchange", "pickup_sports", "ride_share", "roommate_search", "entertainment"]
+        if let storedArray = defaults.value(forKey: "miscPreferences") as? NSArray {
+            prefs = storedArray as! [String]
         }
-        Requests.sharedInstance.sendRequest(dict, action: "getMisc")
+        let dict = ["types": prefs]
+
+        Requests.sharedInstance.sendRequest(dict as NSDictionary, action: "getMisc")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

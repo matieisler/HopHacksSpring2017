@@ -262,7 +262,7 @@ class Requests:NSObject,NSURLConnectionDelegate{
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "getGroupsFinished"), object: nil)
     }
     
-    func getUsers(_ responseDict: NSDictionary) {
+    func getUser(_ responseDict: NSDictionary) {
         if let data = responseDict["data"] as? NSArray {
             
         }
