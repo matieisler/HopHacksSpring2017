@@ -230,8 +230,41 @@ def getMisc():
                 miscDict = {"id": id, "title": title, "content": content, "image_url": image_url, "user_id": user_id, "date_posted": str(date_posted), "post_type": type, "user": user}
                 returnDicts.append(miscDict)
     return jsonify({"status": "ok", "data": returnDicts})
-                
+   
+@app.route('/uploadEvent', methods=['POST'])             
+def uploadEvent():
+    json = request.get_json()
+    start_date = json["start_date"]
+    end_date = json["end_date"]
+    title = json["title"]
+    event_info = json["event_info"]
+    location = json["location"]
+    group_id = json["group_id"]
+    values = [start_date, end_date, title, event_info, location, group_id]
+    cursor.execute("INSERT INTO Events (start_date, end_date, title, event_info, location, group_id) VALUES (? ? ? ? ? ?)",  values)
+    conn.commit()
 
+@app.route('/uploadPost', methods=['POST'])         
+def uploadPost():
+    json = request.get_json()
+    title = json["title"]
+    content = json["content"]
+    type = json["type"]
+    values = [title, content, type]
+    cursor.execute("INSERT INTO Misc (title, content, type) VALUES (? ? ?)", values)
+    conn.commit()
+
+@app.route('/uploadArticle', methods=['POST'])         
+def uploadArticle():
+    json = request.get_json()
+    title = json["title"]
+    publisher_id = json["publisher_id"]
+    content = json["content"]
+    article_type = json["article_type"]
+    date_published = json["date_published"]
+    values = [title, publisher_id, content, article_type, date_published]
+    cursor.execute("INSERT INTO Article (title, publisher_id, content, article_type, date_published) VALUES (? ? ? ? ?)", values)
+    conn.commit()
 
 # app.run(debug = True)
 
