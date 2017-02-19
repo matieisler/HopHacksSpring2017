@@ -230,8 +230,18 @@ class Requests:NSObject,NSURLConnectionDelegate{
                     misc.datePosted = Tools.dateTimeToNSDate(dateTime: miscDict["date_posted"] as! String)! as NSDate?
                     misc.modelDeleted = false
                     
-                    if DatabaseManager.getItem(entityName: "User", predicateString: "id=\(misc.userID)) {
-                    
+                    if DatabaseManager.getItem(entityName: "User", predicateString: "id=\(misc.userID)") == nil {
+                        let user = DatabaseManager.insertObject(entityName: "User") as! User
+                        let userDict = miscDict["user"] as! NSDictionary
+                        user.email = userDict["email"] as! String
+                        user.gender = userDict["gender"] as! String
+                        user.id = misc.userID
+                        user.imageURL = userDict["image_url"] as! String
+                        user.info = userDict["info"] as! String
+                        user.lastName = userDict["last_name"] as! String
+                        user.name = userDict["name"] as! String
+                        user.modelDeleted = false
+                        user.phone = userDict["phone"] as! String
                     }
                     globalVars.receivedMisc?.append(misc)
                 } else {
